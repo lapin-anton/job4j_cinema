@@ -8,6 +8,7 @@ CREATE TABLE users (
 CREATE TABLE sessions (
   id SERIAL PRIMARY KEY,
   name text
+  photo BYTEA
 );
 
 CREATE TABLE ticket (

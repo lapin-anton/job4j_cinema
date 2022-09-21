@@ -41,31 +41,18 @@
                 </div>
             </nav>
             <div class="row">
-                <div class="card" style="width: 100%">
-                    <div class="card-header">
-                        Бронирование билета на сеанс
-                    </div>
-                    <div class="card-body">
-                        <form th:action="@{/buyTicket}" method="POST">
-                            <div class="form-group">
-                                <label for="s.id">Сеанс</label>
-                                <select class="form-control" id="s.id" name="s.id" onchange="">
-                                    <!--/*@thymesVar id="sessions" type="ru.job4j.cinema.model.Session"*/-->
-                                    <option th:each="s : ${sessions}" th:value="${s.id}" th:text="${s.name}"></option>
-                                </select>
-                                <label for="r.id">Ряд</label>
-                                <select class="form-control" id="r.id" name="r.id">
-                                    <option th:each="r : ${rows}" th:value="${r}" th:text="${r}"></option>
-                                </select>
-                                <label for="c.id">Место</label>
-                                <select class="form-control" id="c.id" name="c.id">
-                                    <option th:each="c : ${cells}" th:value="${c}" th:text="${c}"></option>
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Забронировать</button>
-                        </form>
-                    </div>
-                </div>
+                <table class="table">
+                    <tbody>
+                        <!--/*@thymesVar id="sessions" type="ru.job4j.cinema.model.Session"*/-->
+                        <tr th:each="s: ${sessions}">
+                            <td>
+                                <a th:href="@{|/formSelectRow/${s.id}|}">
+                                    <img th:width="300" th:high="300" th:src="@{|/filmPoster/${s.id}|}">
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </body>

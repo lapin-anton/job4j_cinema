@@ -8,12 +8,15 @@ public class Session {
 
     private String name;
 
+    private byte[] photo;
+
     public Session() {
     }
 
-    public Session(int id, String name) {
+    public Session(int id, String name, byte[] photo) {
         this.id = id;
         this.name = name;
+        this.photo = photo;
     }
 
     public int getId() {
@@ -30,6 +33,14 @@ public class Session {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
     }
 
     @Override

@@ -32,7 +32,8 @@ public class SessionPersistence {
                 while (it.next()) {
                     sessions.add(new Session(
                             it.getInt("id"),
-                            it.getString("name")
+                            it.getString("name"),
+                            it.getBytes("photo")
                         )
                     );
                 }
@@ -52,7 +53,8 @@ public class SessionPersistence {
                 if (it.next()) {
                     return new Session(
                             it.getInt("id"),
-                            it.getString("name"));
+                            it.getString("name"),
+                            it.getBytes("photo"));
                 }
             }
         } catch (Exception e) {
