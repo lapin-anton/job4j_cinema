@@ -5,5 +5,8 @@
         xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-    <include file="scripts/001_create_tables.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/001_create_table_users.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/002_create_table_sessions.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/003_create_table_ticket.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/004_alter_table_ticket.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>
