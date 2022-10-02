@@ -3,7 +3,6 @@ package ru.job4j.cinema.persistence;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.job4j.cinema.model.User;
 
@@ -13,13 +12,13 @@ import java.sql.ResultSet;
 import java.util.Optional;
 
 @Repository
-public class UserPersistence {
+public class UserRepository {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UserPersistence.class.getName());
+    private static final Logger LOG = LoggerFactory.getLogger(UserRepository.class.getName());
 
     private final BasicDataSource pool;
 
-    public UserPersistence(BasicDataSource pool) {
+    public UserRepository(BasicDataSource pool) {
         this.pool = pool;
     }
 
@@ -68,4 +67,24 @@ public class UserPersistence {
         return Optional.empty();
     }
 
+    public Optional<User> findUserById(int userId) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM users WHERE id = ?")
+        ) {
+            ps.setInt(1, userId);
+            try (ResultSet it = ps.executeQuery()) {
+                if (it.next()) {
+                    return Optional.of(new User(
+                            it.getInt("id"),
+                            it.getString("username"),
+                            it.getString("email"),
+                            it.getString("phone"))
+                    );
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception during execution: ", e);
+        }
+        return Optional.empty();
+    }
 }

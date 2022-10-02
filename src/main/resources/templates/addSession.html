@@ -27,6 +27,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-item nav-link" th:href="@{/}">Главная</a>
+                <a class="nav-item nav-link" th:href="@{/formAddSession}">Добавить сеанс</a>
                 <a class="nav-item nav-link" th:href="@{/formAddUser}">Зарегистрироваться</a>
                 <!--/*@thymesVar id="user" type="ru.job4j.cinema.model.User"*/-->
                 <a class="nav-item nav-link" th:if="${user.name == 'Гость'}" th:href="@{/loginPage}">
@@ -43,11 +44,22 @@
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Регистрация нового пользователя
+                Новый киносеанс.
             </div>
             <div class="card-body">
-                <h4>Регистрация прошла неуспешно.</h4>
-                <span th:text="${message}" />
+                <form th:action="@{/createSession}" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input type="hidden" name="id" value="0" />
+                        <label>Название фильма
+                            <input type="text" class="form-control" name="name" id="name">
+                        </label><br/>
+                        <div class="form-group">
+                            <label for="file">Постер фильма</label>
+                            <input type="file" class="form-control" name="file" id="file">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Добавить новый киносеанс</button>
+                </form>
             </div>
         </div>
     </div>

@@ -13,8 +13,11 @@ CREATE TABLE sessions (
 
 CREATE TABLE ticket (
     id SERIAL PRIMARY KEY,
-    session_id INT NOT NULL REFERENCES sessions(id) UNIQUE,
-    pos_row INT NOT NULL UNIQUE,
-    cell INT NOT NULL UNIQUE,
+    session_id INT NOT NULL REFERENCES sessions(id),
+    pos_row INT NOT NULL,
+    cell INT NOT NULL,
     user_id INT NOT NULL REFERENCES users(id)
 );
+
+ALTER TABLE ticket
+    ADD CONSTRAINT constraint_ticket UNIQUE (session_id, pos_row, cell);

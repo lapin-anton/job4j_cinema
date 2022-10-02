@@ -13,13 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class SessionPersistence {
+public class SessionRepository {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SessionPersistence.class.getName());
+    private static final Logger LOG = LoggerFactory.getLogger(SessionRepository.class.getName());
 
     private final BasicDataSource pool;
 
-    public SessionPersistence(BasicDataSource pool) {
+    public SessionRepository(BasicDataSource pool) {
         this.pool = pool;
     }
 
@@ -61,5 +61,25 @@ public class SessionPersistence {
             LOG.error("Exception during execution: ", e);
         }
         return null;
+    }
+
+    public Session add(Session session) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement(
+                     "INSERT INTO sessions(name, photo) VALUES (?, ?)",
+                     PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setString(1, session.getName());
+            ps.setBytes(2, session.getPhoto());
+            ps.execute();
+            try (ResultSet id = ps.getGeneratedKeys()) {
+                if (id.next()) {
+                    session.setId(id.getInt(1));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception during execution: ", e);
+        }
+        return session;
     }
 }

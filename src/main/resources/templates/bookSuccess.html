@@ -43,11 +43,16 @@
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Регистрация нового пользователя
+                Бронирование билета
             </div>
             <div class="card-body">
-                <h4>Регистрация прошла неуспешно.</h4>
-                <span th:text="${message}" />
+                <h4>Билет успешно забронирован!</h4>
+                <div>Сведения о забронированном билете:</div>
+                <div>Владелец брони: <span th:text="${user.name}"></span></div>
+                <div>ID билета: <span th:text="${ticketId}"></span></div>
+                <div>Сеанс: <span th:text="${ssn.name}"></span></div>
+                <div>Ряд: <span th:text="${row}"></span></div>
+                <div>Место: <span th:text="${cell}"></span></div>
             </div>
         </div>
     </div>
