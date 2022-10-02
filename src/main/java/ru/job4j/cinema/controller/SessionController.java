@@ -28,7 +28,7 @@ public class SessionController {
     public String addSession(Model model, HttpSession session) {
         User user = getUser(session);
         model.addAttribute("user", user);
-        model.addAttribute("session", new Session(0, "Название киносеанса",null));
+        model.addAttribute("session", new Session(0, "Название киносеанса", null));
         return "addSession";
     }
 
