@@ -1,4 +1,4 @@
-package ru.job4j.cinema.persistence;
+package ru.job4j.cinema.repository;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
@@ -13,6 +13,7 @@ import ru.job4j.cinema.model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -64,14 +65,8 @@ public class TicketRepository {
         ) {
             ps.setInt(1, session.getId());
             try (ResultSet it = ps.executeQuery()) {
-                if (it.next()) {
-                    rsl.add(new Ticket(
-                                it.getInt("id"),
-                                session,
-                                it.getInt("pos_row"),
-                                it.getInt("cell"),
-                                getUser(it.getInt("user_id"))
-                    ));
+                while (it.next()) {
+                    rsl.add(generateTicket(session, it));
                 }
             }
         } catch (Exception e) {
@@ -88,20 +83,24 @@ public class TicketRepository {
             ps.setInt(1, session.getId());
             ps.setInt(2, posRow);
             try (ResultSet it = ps.executeQuery()) {
-                if (it.next()) {
-                    rsl.add(new Ticket(
-                            it.getInt("id"),
-                            session,
-                            it.getInt("pos_row"),
-                            it.getInt("cell"),
-                            getUser(it.getInt("user_id"))
-                    ));
+                while (it.next()) {
+                    rsl.add(generateTicket(session, it));
                 }
             }
         } catch (Exception e) {
             LOG.error("Exception during execution: ", e);
         }
         return rsl;
+    }
+
+    private Ticket generateTicket(Session session, ResultSet it) throws SQLException, UserNotFoundException {
+        return new Ticket(
+                it.getInt("id"),
+                session,
+                it.getInt("pos_row"),
+                it.getInt("cell"),
+                getUser(it.getInt("user_id"))
+        );
     }
 
     private User getUser(int userId) throws UserNotFoundException {

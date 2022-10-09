@@ -44,13 +44,14 @@
     <div class="row pt-3">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Выбрать ряд
+                <h4>Выбрать ряд</h4>
             </div>
-            <div class="card-body">
+            <div class="card-body" align="center">
                 <!--/*@thymesVar id="s" type="ru.job4j.cinema.model.Session"*/-->
                 <form th:action="@{/formSelectCell}" method="GET">
-                    <img th:width="300" th:high="300" th:src="@{|/filmPoster/${s.id}|}">
-                    <div class="form-group">
+                    <div><img th:width="200" th:high="200" th:src="@{|/filmPoster/${s.id}|}"></div>
+                    <div><span th:text="${s.name}"></span></div>
+                    <div class="form-group" align="left">
                         <label for="r.id">Ряд</label>
                         <select class="form-control" id="r.id" name="r.id">
                             <option th:each="r : ${rows}" th:value="${r}" th:text="${r}"></option>

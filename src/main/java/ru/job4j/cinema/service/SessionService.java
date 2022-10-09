@@ -6,8 +6,8 @@ import ru.job4j.cinema.exception.AlreadyBookedException;
 import ru.job4j.cinema.model.Session;
 import ru.job4j.cinema.model.Ticket;
 import ru.job4j.cinema.model.User;
-import ru.job4j.cinema.persistence.SessionRepository;
-import ru.job4j.cinema.persistence.TicketRepository;
+import ru.job4j.cinema.repository.SessionRepository;
+import ru.job4j.cinema.repository.TicketRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;

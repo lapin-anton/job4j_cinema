@@ -45,11 +45,14 @@
                 <table class="table">
                     <tbody>
                         <!--/*@thymesVar id="sessions" type="ru.job4j.cinema.model.Session"*/-->
-                        <tr th:each="s: ${sessions}">
+                        <tr th:each="s: ${sessions}" align="center">
                             <td>
                                 <a th:href="@{|/formSelectRow/${s.id}|}">
-                                    <img th:width="300" th:high="300" th:src="@{|/filmPoster/${s.id}|}">
+                                    <img th:width="150" th:high="200" th:src="@{|/filmPoster/${s.id}|}">
                                 </a>
+                            </td>
+                            <td>
+                                <span th:text="${s.name}"></span>
                             </td>
                         </tr>
                     </tbody>

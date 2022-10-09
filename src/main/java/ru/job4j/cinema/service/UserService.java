@@ -3,7 +3,7 @@ package ru.job4j.cinema.service;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Service;
 import ru.job4j.cinema.model.User;
-import ru.job4j.cinema.persistence.UserRepository;
+import ru.job4j.cinema.repository.UserRepository;
 
 import java.util.Optional;
 

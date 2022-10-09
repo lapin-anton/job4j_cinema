@@ -1,4 +1,4 @@
-package ru.job4j.cinema.persistence;
+package ru.job4j.cinema.repository;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
@@ -9,6 +9,7 @@ import ru.job4j.cinema.model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Optional;
 
 @Repository
@@ -53,12 +54,7 @@ public class UserRepository {
             ps.setString(2, phone);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
-                    return Optional.of(new User(
-                            it.getInt("id"),
-                            it.getString("username"),
-                            it.getString("email"),
-                            it.getString("phone"))
-                    );
+                    return Optional.of(generateUser(it));
                 }
             }
         } catch (Exception e) {
@@ -74,17 +70,20 @@ public class UserRepository {
             ps.setInt(1, userId);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
-                    return Optional.of(new User(
-                            it.getInt("id"),
-                            it.getString("username"),
-                            it.getString("email"),
-                            it.getString("phone"))
-                    );
+                    return Optional.of(generateUser(it));
                 }
             }
         } catch (Exception e) {
             LOG.error("Exception during execution: ", e);
         }
         return Optional.empty();
+    }
+
+    private User generateUser(ResultSet it) throws SQLException {
+        return new User(
+                it.getInt("id"),
+                it.getString("username"),
+                it.getString("email"),
+                it.getString("phone"));
     }
 }

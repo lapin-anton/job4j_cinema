@@ -1,4 +1,4 @@
-package ru.job4j.cinema.persistence;
+package ru.job4j.cinema.repository;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
@@ -9,6 +9,7 @@ import ru.job4j.cinema.model.Session;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,11 +31,7 @@ public class SessionRepository {
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    sessions.add(new Session(
-                            it.getInt("id"),
-                            it.getString("name"),
-                            it.getBytes("photo")
-                        )
+                    sessions.add(generateSession(it)
                     );
                 }
             }
@@ -51,10 +48,7 @@ public class SessionRepository {
             ps.setInt(1, id);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
-                    return new Session(
-                            it.getInt("id"),
-                            it.getString("name"),
-                            it.getBytes("photo"));
+                    return generateSession(it);
                 }
             }
         } catch (Exception e) {
@@ -81,5 +75,12 @@ public class SessionRepository {
             LOG.error("Exception during execution: ", e);
         }
         return session;
+    }
+
+    private Session generateSession(ResultSet it) throws SQLException {
+        return new Session(
+                it.getInt("id"),
+                it.getString("name"),
+                it.getBytes("photo"));
     }
 }
